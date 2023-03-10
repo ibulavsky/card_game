@@ -476,12 +476,23 @@ function placeTokenOnCard(gameRoom, playerId, card) {
  * Обновить ход следующего игрока
  * @param {string} gameRoom
  */
+let i = 1
+let j = 0
 function updateNextPlayer(gameRoom) {
   const game = GAME_LOBBIES.get(gameRoom);
-  const currentPlayer = game.currentPlayer;
-  const length = game.players.size;
-  const nextPlayer = currentPlayer >= length - 1 ? 0 : currentPlayer + 1;
-  GAME_LOBBIES.get(gameRoom).currentPlayer = nextPlayer;
+  const allTeams = game.teams
+  const values = [...allTeams.values()];
+  if(!values[i].players[j]){return}
+  const value = values[i].players[j]
+  i++
+  if (i >= values.length) {
+    i = 0;
+    j++;
+    if(j>= values[0].players.length){
+      j=0
+    }
+  }
+  GAME_LOBBIES.get(gameRoom).currentPlayer = value;
 }
 
 /**
